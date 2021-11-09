@@ -1,12 +1,11 @@
-<p align="center">
+<div align="center">
   <img src="https://user-images.githubusercontent.com/47941171/140989315-7dee8034-4356-43bb-a8c3-c890945f5c79.png" alt="proc-manager" />
-  <p align="center">
     <p align="center">
       <img src="https://github.com/aykutsarac/proc-manager/workflows/golangci-lint/badge.svg" alt="golangci-lint" />
     </p>
     <b>proc-manager</b> is an interactive CLI to kill processes made with Go, currently supports Linux, Mac OS X, Solaris, and Windows.
-   </p>
-</p>
+   </div>
+</div>
 
 ## 🧨 Preview
 
