@@ -26,8 +26,7 @@ func getProccess() []processType {
 	var procList []processType
 
 	for x := range processList {
-		var process ps.Process
-		process = processList[x]
+		process := processList[x]
 
 		item := processType{Name: process.Executable(), pid: process.Pid()}
 		procList = append(procList, item)
