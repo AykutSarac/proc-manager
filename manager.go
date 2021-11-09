@@ -155,14 +155,17 @@ func main() {
 		Searcher:  searcher,
 	}
 
-	_, result, err := prompt.Run()
+	_, result, promptErr := prompt.Run()
 
 	re := regexp.MustCompile("([0-9]+)")
 	procId := re.FindString(result)
-	pid, err := strconv.Atoi(procId)
+	pid, strErr := strconv.Atoi(procId)
+	if promptErr != nil {
+		fmt.Printf("String conversion failed %v\n", strErr)
+	}
 
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
+	if promptErr != nil {
+		fmt.Printf("Prompt failed %v\n", promptErr)
 		return
 	}
 
