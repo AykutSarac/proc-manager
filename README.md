@@ -22,7 +22,7 @@ $ go install
 
 ## 📦 Third Party Packages Used
 * [go-ps](https://github.com/mitchellh/go-ps)
-* [prompt-ui](https://github.com/manifoldco/promptui)
+* [promptui](https://github.com/manifoldco/promptui)
 
 ## Author
 
