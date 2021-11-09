@@ -116,7 +116,13 @@ func confirmKill(pid int) {
 			return
 		}
 
-		proc.Kill()
+		err = proc.Kill()
+
+		if err != nil {
+			fmt.Printf("Prompt failed %v\n", err)
+			return
+		}
+
 		confirmBack()
 	} else {
 		main()
