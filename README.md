@@ -9,11 +9,12 @@
 </p>
 
 ## 🧨 Preview
+
 <img src="https://user-images.githubusercontent.com/47941171/140989831-136a0e4d-e52b-4278-878d-ecf7d9dd2b50.gif" width="800" alt="preview" />
 
 ## ⚙️ Installation
 
-Make sure you have Go installed ([download](https://golang.org/dl/)). Version `1.14` or higher is required.
+Make sure you have Go installed ([download](https://golang.org/dl/)). Version `1.16` or higher is recommended.
 
 ```bash
 # Firstly, create a clone of the repository:
@@ -24,8 +25,9 @@ $ go install
 ```
 
 ## 📦 Third Party Packages Used
-* [go-ps](https://github.com/mitchellh/go-ps)
-* [promptui](https://github.com/manifoldco/promptui)
+
+- [go-ps](https://github.com/mitchellh/go-ps)
+- [promptui](https://github.com/manifoldco/promptui)
 
 ## Author
 
