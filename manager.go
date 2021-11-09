@@ -40,7 +40,7 @@ func confirmBack() {
 	options := []string{"Back", "Quit"}
 
 	templates := &promptui.SelectTemplates{
-		Label:    "{{ . | green }}",
+		Label:    "{{ . | blue }}",
 		Active:   "  {{ . | cyan }}",
 		Inactive: "  {{ . }}",
 	}
