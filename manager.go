@@ -157,14 +157,14 @@ func main() {
 
 	_, result, err := prompt.Run()
 
+	re := regexp.MustCompile("([0-9]+)")
+	procId := re.FindString(result)
+	pid, err := strconv.Atoi(procId)
+
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
 		return
 	}
-
-	re := regexp.MustCompile("([0-9]+)")
-	procId := re.FindString(result)
-	pid, err := strconv.Atoi(procId)
 
 	confirmKill(pid)
 }
