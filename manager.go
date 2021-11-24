@@ -14,7 +14,7 @@ import (
 
 type processType struct {
 	Name string
-	pid  int
+	Pid  int
 }
 
 func getProccess() []processType {
@@ -28,7 +28,7 @@ func getProccess() []processType {
 	for x := range processList {
 		process := processList[x]
 
-		item := processType{Name: process.Executable(), pid: process.Pid()}
+		item := processType{Name: process.Executable(), Pid: process.Pid()}
 		procList = append(procList, item)
 	}
 
@@ -134,9 +134,13 @@ func main() {
 
 	templates := &promptui.SelectTemplates{
 		Label:    "{{ . |  green }}",
-		Active:   "▸ {{ .Name | cyan }}",
+		Active:   "\u25b8 {{ .Name | cyan }}",
 		Inactive: "  {{ .Name }}",
 		Selected: "  {{ .Name | green }}",
+		Details: `
+{{ "--------- Details ----------" | bold }}
+{{ "Process Name:" | magenta | faint }} {{ .Name }}
+{{ "Process ID:" | magenta | faint }} {{ .Pid }}`,
 	}
 
 	searcher := func(input string, index int) bool {
@@ -159,9 +163,9 @@ func main() {
 
 	re := regexp.MustCompile("([0-9]+)")
 	procId := re.FindString(result)
-	pid, strErr := strconv.Atoi(procId)
+	pid, _strErr := strconv.Atoi(procId)
 	if promptErr != nil {
-		fmt.Printf("String conversion failed %v\n", strErr)
+		fmt.Printf("String conversion failed %v\n", _strErr)
 	}
 
 	if promptErr != nil {
