@@ -10,6 +10,7 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/mitchellh/go-ps"
+	"github.com/olekukonko/ts"
 )
 
 type processType struct {
@@ -17,19 +18,31 @@ type processType struct {
 	Pid  int
 }
 
-func getProccess() []processType {
-	processList, err := ps.Processes()
-	if err != nil {
-		log.Println("ps.Processes() Failed, are you using windows?")
+func contains(processList []processType, pid int) bool {
+	for _, v := range processList {
+		if v.Pid == pid {
+			return true
+		}
 	}
 
+	return false
+}
+
+func getProccess() []processType {
 	var procList []processType
+
+	processList, err := ps.Processes()
+	if err != nil {
+		log.Println("Task aborted unexpectedly.")
+	}
 
 	for x := range processList {
 		process := processList[x]
+		item := processType{Name: process.Executable(), Pid: process.PPid()}
 
-		item := processType{Name: process.Executable(), Pid: process.Pid()}
-		procList = append(procList, item)
+		if !contains(procList, item.Pid) {
+			procList = append(procList, item)
+		}
 	}
 
 	return procList
@@ -131,6 +144,7 @@ func confirmKill(pid int) {
 func main() {
 
 	procList := getProccess()
+	size, _ := ts.GetSize()
 
 	templates := &promptui.SelectTemplates{
 		Label:    "{{ . |  green }}",
@@ -155,7 +169,7 @@ func main() {
 		Label:     "Process to kill:",
 		Items:     procList,
 		Templates: templates,
-		Size:      8,
+		Size:      (size.Row() * 5) / 10,
 		Searcher:  searcher,
 	}
 
