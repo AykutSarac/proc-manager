@@ -9,6 +9,9 @@ github.com/manifoldco/promptui/screenbuf
 # github.com/mitchellh/go-ps v1.0.0
 ## explicit; go 1.13
 github.com/mitchellh/go-ps
+# github.com/olekukonko/ts v0.0.0-20171002115256-78ecb04241c0
+## explicit
+github.com/olekukonko/ts
 # golang.org/x/sys v0.0.0-20181122145206-62eef0e2fa9b
 ## explicit
 golang.org/x/sys/unix
