@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
-	"strconv"
 	"strings"
 
 	"github.com/manifoldco/promptui"
@@ -32,8 +30,10 @@ func getProccess() []processType {
 	var procList []processType
 
 	processList, err := ps.Processes()
+
 	if err != nil {
 		log.Println("Task aborted unexpectedly.")
+		os.Exit(2)
 	}
 
 	for x := range processList {
@@ -77,7 +77,7 @@ func confirmBack() {
 
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
-		return
+		os.Exit(1)
 	}
 
 	if result == "Back" {
@@ -113,26 +113,26 @@ func confirmKill(pid int) {
 		Size:      2,
 	}
 
-	_, result, err := prompt.Run()
+	_, result, promptErr := prompt.Run()
 
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return
+	if promptErr != nil {
+		fmt.Printf("Prompt failed %v\n", promptErr)
+		os.Exit(0)
 	}
 
 	if result == "Yes" {
-		proc, err := os.FindProcess(pid)
+		proc, procErr := os.FindProcess(pid)
 
-		if err != nil {
-			fmt.Printf("Prompt failed %v\n", err)
-			return
+		if procErr != nil {
+			fmt.Printf("Prompt failed %v\n", procErr)
+			os.Exit(1)
 		}
 
-		err = proc.Kill()
+		procErr = proc.Kill()
 
-		if err != nil {
-			fmt.Printf("Prompt failed %v\n", err)
-			return
+		if procErr != nil {
+			fmt.Printf("Prompt failed %v\n", procErr)
+			os.Exit(1)
 		}
 
 		confirmBack()
@@ -173,19 +173,12 @@ func main() {
 		Searcher:  searcher,
 	}
 
-	_, result, promptErr := prompt.Run()
-
-	re := regexp.MustCompile("([0-9]+)")
-	procId := re.FindString(result)
-	pid, _strErr := strconv.Atoi(procId)
-	if promptErr != nil {
-		fmt.Printf("String conversion failed %v\n", _strErr)
-	}
+	i, _, promptErr := prompt.Run()
 
 	if promptErr != nil {
 		fmt.Printf("Prompt failed %v\n", promptErr)
-		return
+		os.Exit(0)
 	}
 
-	confirmKill(pid)
+	confirmKill(procList[i].Pid)
 }
